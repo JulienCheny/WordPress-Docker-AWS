@@ -21,6 +21,8 @@ sudo chkconfig docker on
 ```
 ### Mettre docker-compose comme executable partout
 
+https://docs.docker.com/compose/completion/
+
 ```
 export PATH=$PATH:/usr/local/bin/
 ```
