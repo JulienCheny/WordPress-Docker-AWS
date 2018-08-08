@@ -37,6 +37,26 @@ Solution temporaire :
 export PATH=$PATH:/usr/local/bin/
 ```
 
+## Installation rapide des dockers
+
+Choisir une de ces trois versions :
+
+### Version http
+
+Récupérer le fichier `docker-compose.yml` :
+
+```
+$ curl -L https://raw.githubusercontent.com/JulienCheny/WordPress-Docker-AWS/master/http-version/docker-compose.yml -o $PWD/docker-compose.yml
+```
+
+### Version https caddy
+
+Récupérer le dossier version :
+
+```
+$ wget -nc -O - https://github.com/JulienCheny/WordPress-Docker-AWS/tarball/master/https-caddy-version | tar xvz -
+```
+
 ## Fabriquer les dockers de A à Z
 
 Choisir une de ces 3 versions :
