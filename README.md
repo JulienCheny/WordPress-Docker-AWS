@@ -37,7 +37,11 @@ Solution temporaire :
 export PATH=$PATH:/usr/local/bin/
 ```
 
-## Configurer docker version http
+## Fabriquer les dockers de A à Z
+
+Choisir une de ces 3 versions :
+
+### Version http
 
 Créer le fichier `docker-compose.yml` :
 
@@ -71,7 +75,7 @@ services:
       WORDPRESS_DB_PASSWORD: ChangeMe
 ```
 
-## Configurer docker version https
+### Version https caddy
 
 Passer en https nécessite obligatoirement de disposer d'un nom de domaine.
 Utiliser une IP ne fonctionnera pas.
@@ -126,7 +130,7 @@ services:
         max-file: "3"
 ```
 
-Créer le fichier `Caddyfile` :
+Créer le fichier `Caddyfile` et éditer l'email et le nom de domaine :
 
 ```
 mon.site.com {
@@ -139,15 +143,7 @@ mon.site.com {
 }
 ```
 
-## Ouvrir les port TCP dans AWS
-
-## Lancer les containers docker
-
-```
-docker-compose up
-```
-
-## Optionnel : Utiliser Traefik à la place de Caddy
+### Version https traefik (plus compliqué que caddy)
 
 Créer le fichier `docker-compose.yml` et éditer le nom de domaine du site :
 
@@ -239,6 +235,12 @@ touch traefik-data/acme.json
 chmod 600 traefik-data/acme.json
 ```
 
-Lancer les containers docker.
+## Ouvrir les port TCP dans AWS
+
+## Lancer les containers docker
+
+```
+docker-compose up
+```
 
 sources : https://docs.traefik.io/#the-trfik-quickstart-using-docker
