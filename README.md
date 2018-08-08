@@ -129,7 +129,7 @@ services:
 Créer le fichier `Caddyfile` :
 
 ```
-www.monsite.com {
+mon.site.com {
   tls mon@email.com
 
 #  nom et port du container à recuperer
