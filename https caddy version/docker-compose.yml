@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7.22
+    volumes:
+      - ./db-data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ChangeMeRoot
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ChangeMe
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    expose:
+      - "80"
+    restart: always
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ChangeMe
+
+  proxy-https:
+    image: abiosoft/caddy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile
+      - ./caddy-data:/root/.caddy
+    environment:
+      - ACME_AGREE=true
+    networks:
+      - web
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

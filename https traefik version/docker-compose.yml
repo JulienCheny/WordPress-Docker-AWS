@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7.22
+    volumes:
+      - ./db-data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ChangeMeRoot
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ChangeMe
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    expose:
+      - "80"
+    labels:
+      - "traefik.frontend.rule=Host:mon.site.fr" # renommage de route sur nom de domaine
+      - "traefik.enable=true"                       # activation de traefik sur ce container
+    restart: always
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ChangeMe
+
+  proxy-https:
+    image: traefik
+    restart: always
+    command: --api
+    ports:
+      - 80:80
+      - 443:443
+      - 9090:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./traefik-data/acme.json:/acme.json

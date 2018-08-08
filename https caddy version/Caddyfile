@@ -1,0 +1,8 @@
+mon.site.com {
+  tls mon@email.com
+
+#  nom et port du container à recuperer
+  proxy / wordpress:80 {
+    transparent
+  }
+}
